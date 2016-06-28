@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:text="@string/submit"
+        android:textColor="@color/white" />
+
+    <ScrollView
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_submit"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/include_sender_data"
+                layout="@layout/remittance_client_data" />
+
+            <include
+                android:id="@+id/include_bene_data"
+                layout="@layout/remittance_client_data" />
+
+            <TextView
+                android:id="@+id/tv_paymentOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_bg"
+                android:drawableRight="@drawable/ic_arrow"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="Select Payment Option"
+                android:visibility="gone" />
+
+            <ViewStub
+                android:id="@+id/paymentdata_stub"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

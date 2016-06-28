@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">RCBC</string>
+    <string name="google_api_key">AIzaSyDXBoMwnqZCFfgExbuJcHXcen3Q3f5zZrI</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_logout">Logout</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="submit">Submit</string>
+    <string name="next">Next</string>
+    <string name="register">Register</string>
+    <string name="firstname">First Name</string>
+    <string name="middlename">Middle Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="bdate">Date of Birth</string>
+    <string name="bday_city">Birth day place(City)</string>
+    <string name="bday_state">Birth day place(State)</string>
+    <string name="registration">Registration</string>
+    
+    <string name="status">Status</string>
+    <string name="mother_name">Mother\'s Name</string>
+    <string name="nationality">Nationality</string>
+    <string name="tin">TIN Number</string>
+    <string name="sss">SSS Number</string>
+    <string name="passport">Passport Number</string>
+    <string name="acr">Alien Certificate of Registration</string>
+    <string name="cardno">Card Number</string>
+    <string name="ccv">Credit Card CCV Number</string>
+    <string name="present_add">Primary Address</string>
+    <string name="present_country"> Country</string>
+    <string name="present_state">State</string>
+    <string name="second_address">Secondary Address</string>
+    <string name="second_country">Country</string>
+    <string name="second_state">State</string>
+    <string name="third_address">Tertiary Address</string>
+    <string name="third_country">Country</string>
+    <string name="third_state">State</string>
+    <string name="residential">Residential Contact Number</string>
+    <string name="office">Office Contact Number</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="primary_email">Primary Email</string>
+    <string name="sencondary_email">Secondary Email</string>
+    <string name="third_email">Tertiary Email</string>
+    <string name="branch">Branch</string>
+    <string name="code">Code</string>
+    <string name="b_place_country">Birthplace(Country)</string>
+    <string name="b_place_state">Birthplace(State)</string>
+
+    <string name="single">Single</string>
+    <string name="married">Married</string>
+    <string name="divorced">Divorced</string>
+    <string name="widowed">Widowed</string>
+    <string name="bank"> Bank</string>
+
+    <string name="sender">Sender</string>
+    <string name="location">Location</string>
+
+    <string name="email">E-mail Address</string>
+    <string name="cancel">CANCEL</string>
+    <string name="submit2">SUBMIT</string>
+    <string name="merchantlocation">Merchant Location</string>
+    <string name="paymentmodes">Payment Modes</string>
+</resources>
