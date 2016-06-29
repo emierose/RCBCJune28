@@ -58,7 +58,7 @@ public class PaymentOptionsController {
                             for (int i = 0;i< payments.length();i++){
                                 JSONObject ob = payments.getJSONObject(i);
                                 ClientObjects client = new ClientObjects();
-                                client.TYPEID = ob.getString("type_id");
+                                client.TYPEID = ob.getString("payment_type");
                                 client.VALUE = ob.getString("value");
                                 paymentmodes.add(client);
                             }
@@ -69,6 +69,14 @@ public class PaymentOptionsController {
                                 }
                             });
 
+                            break;
+                        case 2:
+                            mView.showError("", jo.getString(JSONFlag.MESSAGE), new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                   requestPaymentOptions();
+                                }
+                            });
                             break;
                     }
                 } else {
@@ -86,5 +94,23 @@ public class PaymentOptionsController {
     }
 
     public void addPaymentMode() {
+        User user = new UserModel().getCurrentUser(mView.getContext());
+        try {
+            WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/credit_card_registration");
+            wsInfo.addParam("client_id",user.getClientId());
+            wsInfo.addParam("session_id", user.getSessionId());
+            wsInfo.addParam("ccv", user.getSessionId());
+            wsInfo.addParam("ccv", user.getSessionId());
+            wsInfo.addParam("month_expiry", user.getSessionId());
+            wsInfo.addParam("year_expiry", user.getSessionId());
+            mModel.sendRequestWithProgressbar(mView.getContext(), wsInfo, 2);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mView.showError("LOGIN", Message.EXCEPTION, null);
+        }
+    }
+
+    public void submitRegistration() {
     }
 }

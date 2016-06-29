@@ -9,10 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import UnlitechDevFramework.src.ud.framework.data.Response;
 import bluetooth.em.com.projectcountry.R;
@@ -32,6 +37,10 @@ public class PeraPadalaPaymentOptions extends AppCompatActivity implements Payme
     PaymentOptionsController mController;
     PeraPadalaModel mModel;
     RecyclerView recList;
+    AlertDialog.Builder    builder;
+    private View dialogView;
+    private AlertDialog mAlertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +57,8 @@ public class PeraPadalaPaymentOptions extends AppCompatActivity implements Payme
 //        returnIntent.putExtra("position",1);
 //        setResult(1,returnIntent);
 //        finish();
-                mController.addPaymentMode();
+//                mController.addPaymentMode();
+                displayPaymentRegistration();
             }
         });
         System.out.println("PADALA 1" );
@@ -67,6 +77,56 @@ public class PeraPadalaPaymentOptions extends AppCompatActivity implements Payme
         recList.setLayoutManager(llm);
 
     }
+
+    private void displayPaymentRegistration() {
+        builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyleBlue);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.remittance_add_creditcard, null);
+        builder.setView(dialogView);
+        Calendar cal = Calendar.getInstance();
+//        final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
+//        final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+//        monthPicker.setMinValue(1);
+//        monthPicker.setMaxValue(12);
+//        monthPicker.setValue(cal.get(Calendar.MONTH) + 1);
+//
+//        int year = cal.get(Calendar.YEAR);
+//        yearPicker.setMinValue(year);
+//        yearPicker.setMaxValue(2050);
+//        yearPicker.setValue(year);
+        Spinner month  = (Spinner)dialogView.findViewById(R.id.sp_month);
+        Spinner year  = (Spinner)dialogView.findViewById(R.id.sp_year);
+         String[] Months = new String[] { "January", "February",
+                "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December" };
+        ArrayList<String> years = new ArrayList<String>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = cal.get(Calendar.YEAR); i <= 2050; i++) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
+        year.setAdapter(adapter);
+        ArrayAdapter<String> adapter2= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Months);
+        builder.setPositiveButton("REGISTER", null);
+        builder.setNegativeButton("CANCEL", null);
+        mAlertDialog = builder.create();
+        mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button b = mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        // TODO Do something
+                        mController.submitRegistration();
+                    }
+                });
+            }
+        });
+        mAlertDialog.show(); }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
