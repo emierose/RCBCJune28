@@ -19,10 +19,8 @@ import UnlitechDevFramework.src.ud.framework.data.Response;
 import UnlitechDevFramework.src.ud.framework.data.enums.Status;
 import UnlitechDevFramework.src.ud.framework.utilities.ViewUtil;
 import UnlitechDevFramework.src.ud.framework.webservice.data.WebServiceInfo;
-import bluetooth.em.com.projectcountry.activity.MainActivity;
 import bluetooth.em.com.projectcountry.R;
-import bluetooth.em.com.projectcountry.data.BankObjects;
-import bluetooth.em.com.projectcountry.data.BranchObjects;
+import bluetooth.em.com.projectcountry.activity.MainActivity;
 import bluetooth.em.com.projectcountry.data.CountryObjects;
 import bluetooth.em.com.projectcountry.data.JSONFlag;
 import bluetooth.em.com.projectcountry.data.Message;
@@ -42,12 +40,12 @@ public class RegistrationController {
     public ArrayList<CountryObjects> s_stateObjects ;
     public ArrayList<CountryObjects> t_stateObjects ;
     public ArrayList<CountryObjects> bplace_stateObjects ;
-    public ArrayList<BankObjects> bank_objects ;
+//    public ArrayList<BankObjects> bank_objects ;
     public static final int TYPE_P_COUNTRY = 2;
     public static final int TYPE_S_COUNTRY= 3;
     public static final int TYPE_T_COUNTRY= 4;
     public static final int TYPE_BPLACE_COUNTRY= 5;
-    public static final int TYPE_BRANCH= 6;
+//    public static final int TYPE_BRANCH= 6;
     RegistrationHolder holder;
     public RegistrationController(RegistrationInterface view, RegistrationModel model) {
         mModel = model;
@@ -57,7 +55,7 @@ public class RegistrationController {
         s_stateObjects = new ArrayList<CountryObjects>();
         t_stateObjects = new ArrayList<CountryObjects>();
         bplace_stateObjects = new ArrayList<CountryObjects>();
-        bank_objects = new ArrayList<BankObjects>();
+//        bank_objects = new ArrayList<BankObjects>();
     }
     public void register() {
         //Checks if the credentials are valid then calls the loginToServer method
@@ -101,21 +99,26 @@ public class RegistrationController {
             message = "Mobile number is required.";
         } else if(ViewUtil.isEmpty(holder.p_email)) {
             message = "Email is required.";
-        }else if(holder.bank.getSelectedItemPosition() == 0) {
-            message = "Please choose bank";
-        }else if(holder.branch.getSelectedItemPosition() == 0) {
-            message = "Please choose branch";
-        }else if(ViewUtil.isEmpty(holder.tin)) {
+        }
+//        else if(holder.bank.getSelectedItemPosition() == 0) {
+//            message = "Please choose bank";
+//        }else if(holder.branch.getSelectedItemPosition() == 0) {
+//            message = "Please choose branch";
+//        }
+        else if(ViewUtil.isEmpty(holder.tin)) {
             message = "Tin number is required.";
         }else if(ViewUtil.isEmpty(holder.sss)) {
             message = "SSS Number is required.";
         }else if(ViewUtil.isEmpty(holder.passport)) {
             message = "Passport Number is required.";
-        }else if(ViewUtil.isEmpty(holder.cadrno)) {
-            message = "Card Number is required.";
-        }else if(ViewUtil.isEmpty(holder.acr)) {
+        }
+//        else if(ViewUtil.isEmpty(holder.cadrno)) {
+//            message = "Card Number is required.";
+//        }
+         else if(ViewUtil.isEmpty(holder.acr)) {
             message = "Credit Card CCV Number is required.";
-        }else if(ViewUtil.isEmpty(holder.p_add)) {
+        }
+        else if(ViewUtil.isEmpty(holder.p_add)) {
             message = "Primary Address is required.";
         }else if(holder.p_country.getSelectedItemPosition() == 0) {
             message = "Please choose country";
@@ -140,17 +143,17 @@ public class RegistrationController {
             holder.tv_p_country.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reload, 0, 0, 0);
         }
     }
-    public void requestBankBranches() {
-        try{
-            WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/fetch_bank_branches");
-            mModel.sendRequest(mView.getContext(), wsInfo, TYPE_BRANCH);
-        } catch (Exception e) {
-//            RegistrationHolder holder = mView.getregistrationCredentials();
-//            holder.tv_p_country.setCompoundDrawables(mView.getContext().getResources().getDrawable(R.drawable.ic_reload),null,null,null);
-//            holder.tv_p_country.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reload,0,0,0);
-//            System.out.println(e.getMessage());
-        }
-    }
+//    public void requestBankBranches() {
+//        try{
+//            WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/fetch_bank_branches");
+//            mModel.sendRequest(mView.getContext(), wsInfo, TYPE_BRANCH);
+//        } catch (Exception e) {
+////            RegistrationHolder holder = mView.getregistrationCredentials();
+////            holder.tv_p_country.setCompoundDrawables(mView.getContext().getResources().getDrawable(R.drawable.ic_reload),null,null,null);
+////            holder.tv_p_country.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reload,0,0,0);
+////            System.out.println(e.getMessage());
+//        }
+//    }
     public void submit() {
         try {
         WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/register_user");
@@ -174,8 +177,8 @@ public class RegistrationController {
         }
         String bplace_country_code = countryObjects.get(holder.bday_country.getSelectedItemPosition() - 1).COUNTRY_CODE;
         String nationality = countryObjects.get(holder.nationality.getSelectedItemPosition() - 1).COUNTRY_CODE;
-        String bank = bank_objects.get(holder.bank.getSelectedItemPosition() - 1).BANK_ID;
-        String branch = bank_objects.get(holder.bank.getSelectedItemPosition() - 1).BRANCHES.get(holder.branch.getSelectedItemPosition()-1).BRANCH_ID;
+//        String bank = bank_objects.get(holder.bank.getSelectedItemPosition() - 1).BANK_ID;
+//        String branch = bank_objects.get(holder.bank.getSelectedItemPosition() - 1).BRANCHES.get(holder.branch.getSelectedItemPosition()-1).BRANCH_ID;
         wsInfo.addParam("username", holder.username.getText().toString());
         wsInfo.addParam("password",holder.tpass.getText().toString());
         wsInfo.addParam("fname",holder.firstname.getText().toString());
@@ -191,8 +194,8 @@ public class RegistrationController {
         wsInfo.addParam("sss",holder.sss.getText().toString());
         wsInfo.addParam("passport",holder.passport.getText().toString());
         wsInfo.addParam("acr",holder.acr.getText().toString());
-        wsInfo.addParam("card_no",holder.cadrno.getText().toString());
-        wsInfo.addParam("ccv",holder.ccv.getText().toString());
+//        wsInfo.addParam("card_no",holder.cadrno.getText().toString());
+//        wsInfo.addParam("ccv",holder.ccv.getText().toString());
         wsInfo.addParam("p_address",holder.p_add.getText().toString());
         wsInfo.addParam("p_country",p_country_code);
         wsInfo.addParam("p_state",holder.p_state.getSelectedItem().toString());
@@ -208,8 +211,8 @@ public class RegistrationController {
         wsInfo.addParam("p_email",holder.p_email.getText().toString());
         wsInfo.addParam("s_email",holder.s_email.getText().toString());
         wsInfo.addParam("t_email",holder.t_email.getText().toString());
-        wsInfo.addParam("b_code", bank);//bank
-        wsInfo.addParam("b_branch",branch);
+//        wsInfo.addParam("b_code", bank);//bank
+//        wsInfo.addParam("b_branch",branch);
 
         //Tells the model to send the personal info
         mModel.registrationRequest(mView.getContext(), wsInfo, 0);
@@ -328,31 +331,31 @@ public class RegistrationController {
                             }
                             loadStateList(TYPE_BPLACE_COUNTRY);
                             break;
-                        case TYPE_BRANCH:
-                            System.out.println("RESPONSE6:" + response.getResponse());
-                            JSONArray array_data7 = jo.getJSONArray("result_data");
-                            for (int i = 0; i < array_data7.length(); i++) {
-                                JSONObject data = array_data7.getJSONObject(i);
-                                ArrayList<BranchObjects> BRANCHES = new ArrayList<BranchObjects>();
-                                BankObjects ob = new BankObjects();
-                                ob.BANK_ID = data.getString("Bank_id");
-                                ob.BANK_NAME = data.getString("Bank_name");
-                                JSONArray array_data8 = data.getJSONArray("Branches");
-                                for (int j = 0; j < array_data8.length(); j++) {
-                                    JSONObject data2 = array_data8.getJSONObject(j);
-                                    BranchObjects ob2 = new BranchObjects();
-                                    System.out.println("branch id:" + data2.getString("branch_id"))
-                                    ;
-                                    ob2.BRANCH_ID = data2.getString("branch_id");
-                                    ob2.BRANCH_ADDRESS = data2.getString("branch_address");
-                                    BRANCHES.add(ob2);
-                                }
-                                System.out.println("bank id:" + data.getString("Bank_id"));
-                                ob.BRANCHES = BRANCHES;
-                                bank_objects.add(ob);
-                            }
-                            loandBankList();
-                            break;
+//                        case TYPE_BRANCH:
+//                            System.out.println("RESPONSE6:" + response.getResponse());
+//                            JSONArray array_data7 = jo.getJSONArray("result_data");
+//                            for (int i = 0; i < array_data7.length(); i++) {
+//                                JSONObject data = array_data7.getJSONObject(i);
+//                                ArrayList<BranchObjects> BRANCHES = new ArrayList<BranchObjects>();
+//                                BankObjects ob = new BankObjects();
+//                                ob.BANK_ID = data.getString("Bank_id");
+//                                ob.BANK_NAME = data.getString("Bank_name");
+//                                JSONArray array_data8 = data.getJSONArray("Branches");
+//                                for (int j = 0; j < array_data8.length(); j++) {
+//                                    JSONObject data2 = array_data8.getJSONObject(j);
+//                                    BranchObjects ob2 = new BranchObjects();
+//                                    System.out.println("branch id:" + data2.getString("branch_id"))
+//                                    ;
+//                                    ob2.BRANCH_ID = data2.getString("branch_id");
+//                                    ob2.BRANCH_ADDRESS = data2.getString("branch_address");
+//                                    BRANCHES.add(ob2);
+//                                }
+//                                System.out.println("bank id:" + data.getString("Bank_id"));
+//                                ob.BRANCHES = BRANCHES;
+//                                bank_objects.add(ob);
+//                            }
+//                            loandBankList();
+//                            break;
                     }
                 } else {
                     mView.showError(Title.REGISTRATION, jo.getString(JSONFlag.MESSAGE), null);
@@ -418,18 +421,18 @@ public class RegistrationController {
                 break;
         }
     }
-    private void loandBankList() {
-        RegistrationHolder holder = mView.getregistrationCredentials();
-        holder.tv_p_country.clearAnimation();
-        ArrayList<String> forSpinner = new ArrayList<String>();
-        for (int i = 0; i < bank_objects.size(); i++) {
-            forSpinner.add(bank_objects.get(i).BANK_NAME);
-        }
-        forSpinner.add(0, "-- Select Bank --");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mView.getContext(), android.R.layout.simple_spinner_item, forSpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.bank.setAdapter(adapter);
-    }
+//    private void loandBankList() {
+//        RegistrationHolder holder = mView.getregistrationCredentials();
+//        holder.tv_p_country.clearAnimation();
+//        ArrayList<String> forSpinner = new ArrayList<String>();
+//        for (int i = 0; i < bank_objects.size(); i++) {
+//            forSpinner.add(bank_objects.get(i).BANK_NAME);
+//        }
+//        forSpinner.add(0, "-- Select Bank --");
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mView.getContext(), android.R.layout.simple_spinner_item, forSpinner);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        holder.bank.setAdapter(adapter);
+//    }
 
     private void loadCountryList() {
             RegistrationHolder holder = mView.getregistrationCredentials();
@@ -509,30 +512,30 @@ public class RegistrationController {
             }
         };
     }
-    public AdapterView.OnItemSelectedListener on_bank_select() {
-        return new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<String> forSpinner4 = new ArrayList<String>();
-                RegistrationHolder holder = mView.getregistrationCredentials();
-                if(position >0) {
-
-                    for (int i = 0; i < bank_objects.get(position-1).BRANCHES.size(); i++) {
-                        forSpinner4.add( bank_objects.get(position-1).BRANCHES.get(i).BRANCH_ADDRESS);
-                    }
-                    forSpinner4.add(0, "-- Select Branch --");
-                    ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(mView.getContext(), android.R.layout.simple_spinner_item, forSpinner4);
-                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    holder.branch.setAdapter(adapter4);
-                }
-
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-    }
+//    public AdapterView.OnItemSelectedListener on_bank_select() {
+//        return new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                ArrayList<String> forSpinner4 = new ArrayList<String>();
+//                RegistrationHolder holder = mView.getregistrationCredentials();
+//                if(position >0) {
+//
+//                    for (int i = 0; i < bank_objects.get(position-1).BRANCHES.size(); i++) {
+//                        forSpinner4.add( bank_objects.get(position-1).BRANCHES.get(i).BRANCH_ADDRESS);
+//                    }
+//                    forSpinner4.add(0, "-- Select Branch --");
+//                    ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(mView.getContext(), android.R.layout.simple_spinner_item, forSpinner4);
+//                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    holder.branch.setAdapter(adapter4);
+//                }
+//
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        };
+//    }
     private void searchState(int position, int type) {
         System.out.println("COUNTRY CODE :" + countryObjects.get(position-1).COUNTRY_CODE+"COUNTRY POS :" + position);
         WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/fetch_state_list");

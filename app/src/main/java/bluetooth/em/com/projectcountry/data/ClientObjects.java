@@ -15,4 +15,5 @@ public class ClientObjects {
     //payment modes
     public String TYPEID;
     public String VALUE;
+    public String EXPIRY;
 }

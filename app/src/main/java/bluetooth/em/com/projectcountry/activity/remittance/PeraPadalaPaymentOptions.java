@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -26,7 +28,6 @@ import bluetooth.em.com.projectcountry.data.ClientObjects;
 import bluetooth.em.com.projectcountry.data.Title;
 import bluetooth.em.com.projectcountry.data.adapters.PadalaPaymentsAdapter;
 import bluetooth.em.com.projectcountry.model.PeraPadalaModel;
-import bluetooth.em.com.projectcountry.view.MenuHolder;
 import bluetooth.em.com.projectcountry.view.PaymentOptionsView;
 
 /**
@@ -96,17 +97,18 @@ public class PeraPadalaPaymentOptions extends AppCompatActivity implements Payme
 //        yearPicker.setValue(year);
         Spinner month  = (Spinner)dialogView.findViewById(R.id.sp_month);
         Spinner year  = (Spinner)dialogView.findViewById(R.id.sp_year);
-         String[] Months = new String[] { "January", "February",
+         String[] Months = new String[] { "Month","January", "February",
                 "March", "April", "May", "June", "July", "August", "September",
                 "October", "November", "December" };
         ArrayList<String> years = new ArrayList<String>();
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        years.add("Year");
         for (int i = cal.get(Calendar.YEAR); i <= 2050; i++) {
             years.add(Integer.toString(i));
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
         year.setAdapter(adapter);
         ArrayAdapter<String> adapter2= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Months);
+        month.setAdapter(adapter2);
         builder.setPositiveButton("REGISTER", null);
         builder.setNegativeButton("CANCEL", null);
         mAlertDialog = builder.create();
@@ -150,8 +152,18 @@ public class PeraPadalaPaymentOptions extends AppCompatActivity implements Payme
     }
 
     @Override
-    public MenuHolder getCredentials() {
-        return null;
+    public PeraPadalaHolder getCredentials(int type) {
+        PeraPadalaHolder holder = new PeraPadalaHolder();
+        if(type ==2) {
+            holder.cardno = (EditText) mAlertDialog.findViewById(R.id.et_cardno);
+            holder.ccv = (EditText) mAlertDialog.findViewById(R.id.et_ccv);
+            holder.tl_cardno = (TextInputLayout) mAlertDialog.findViewById(R.id.tl_cardno);
+            holder.tl_ccv = (TextInputLayout) mAlertDialog.findViewById(R.id.tl_ccv);
+            holder.ex_month = (Spinner) mAlertDialog.findViewById(R.id.sp_month);
+            holder.ex_year = (Spinner) mAlertDialog.findViewById(R.id.sp_year);
+            holder.mAlertDialog = mAlertDialog;
+        }
+        return holder;
     }
 
     @Override

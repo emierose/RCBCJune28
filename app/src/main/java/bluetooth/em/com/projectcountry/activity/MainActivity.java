@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import UnlitechDevFramework.src.ud.framework.data.Response;
 import bluetooth.em.com.projectcountry.R;
+import bluetooth.em.com.projectcountry.activity.more.Terms;
 import bluetooth.em.com.projectcountry.activity.remittance.PeraPadalaSend;
 import bluetooth.em.com.projectcountry.controller.MainmenuController;
 import bluetooth.em.com.projectcountry.data.Message;
@@ -159,6 +160,16 @@ public class MainActivity extends AppCompatActivity
         if(name.equals("View Merchants Locations")){
             viewMerchantsLocations();
         }
+        if(name.equals("View Terms and Conditions")){
+            fragment = new Terms();
+            tag = "Terms and Conditions";
+        }  if(name.equals("View Terms and Conditions")){
+            fragment = new Terms();
+            tag = "About Us";
+        }if(name.equals("Log out")){
+            signout();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         if (fragment != null) {

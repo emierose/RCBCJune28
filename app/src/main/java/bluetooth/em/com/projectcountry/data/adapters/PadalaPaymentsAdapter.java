@@ -28,13 +28,14 @@ public class PadalaPaymentsAdapter extends RecyclerView.Adapter<PadalaPaymentsAd
     Context appcontext;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView name,bdate;
+        TextView name,bdate,expiry;
         ImageView icon;
         ViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             name = (TextView)itemView.findViewById(R.id.tv_name);
             bdate = (TextView)itemView.findViewById(R.id.tv_bdate);
+            expiry = (TextView)itemView.findViewById(R.id.tv_email);
             icon = (ImageView)itemView.findViewById(R.id.icon);
 
         }
@@ -56,7 +57,13 @@ public class PadalaPaymentsAdapter extends RecyclerView.Adapter<PadalaPaymentsAd
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.icon.setImageResource(R.drawable.ic_payment_method);
         holder.name.setText(Html.fromHtml("<b>TYPE : </b>" + objects.get(position).TYPEID ) );
-        holder.bdate.setText(Html.fromHtml("<b>VALUE: </b>" + objects.get(position).VALUE) );
+        holder.bdate.setText(Html.fromHtml("<b>VALUE: </b>" + objects.get(position).VALUE));
+        if(objects.get(position).EXPIRY!=null){
+            holder.expiry.setVisibility(View.VISIBLE);
+            holder.expiry.setText(Html.fromHtml("<b>EXPIRY : </b>" + objects.get(position).EXPIRY) );
+        }else{
+            holder.expiry.setVisibility(View.GONE);
+        }
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

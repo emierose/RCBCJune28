@@ -40,7 +40,7 @@ public class Registration extends AppCompatActivity implements RegistrationInter
         mModel.registerObserver(this);
         mController = new RegistrationController(this,mModel);
         mController.requestCountry();
-        mController.requestBankBranches();
+//        mController.requestBankBranches();
 
         findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class Registration extends AppCompatActivity implements RegistrationInter
         holder.p_country.setOnItemSelectedListener(mController.on_p_country_select());
         holder.s_country.setOnItemSelectedListener(mController.on_s_country_select());
         holder.t_country.setOnItemSelectedListener(mController.on_t_country_select());
-        holder.bank.setOnItemSelectedListener(mController.on_bank_select());
+//        holder.bank.setOnItemSelectedListener(mController.on_bank_select());
         holder.bday_country.setOnItemSelectedListener(mController.on_bplace_country_select());
 
     }
@@ -102,8 +102,8 @@ public class Registration extends AppCompatActivity implements RegistrationInter
         holder.sss = (EditText)findViewById(R.id.et_sss);
         holder.passport = (EditText)findViewById(R.id.et_passport);
         holder.acr = (EditText)findViewById(R.id.et_acr);
-        holder.cadrno = (EditText)findViewById(R.id.et_cardno);
-        holder.ccv = (EditText)findViewById(R.id.et_ccv);
+//        holder.cadrno = (EditText)findViewById(R.id.et_cardno);
+//        holder.ccv = (EditText)findViewById(R.id.et_ccv);
         holder.p_add = (EditText)findViewById(R.id.et_p_address);
         holder.p_country = (Spinner)findViewById(R.id.sp_p_country);
         holder.p_state = (Spinner)findViewById(R.id.sp_p_state);
@@ -119,8 +119,8 @@ public class Registration extends AppCompatActivity implements RegistrationInter
         holder.p_email = (EditText)findViewById(R.id.et_p_email);
         holder.s_email = (EditText)findViewById(R.id.et_s_email);
         holder.t_email = (EditText)findViewById(R.id.et_t_email);
-        holder.branch = (Spinner)findViewById(R.id.sp_branch);
-        holder.bank = (Spinner)findViewById(R.id.sp_bank);
+//        holder.branch = (Spinner)findViewById(R.id.sp_branch);
+//        holder.bank = (Spinner)findViewById(R.id.sp_bank);
         holder.text = (TextView)findViewById(R.id.login);
         holder.tv_p_country = (TextView)findViewById(R.id.tv_l_p_country);
         holder.tv_p_state = (TextView)findViewById(R.id.tv_l_p_state);

@@ -144,6 +144,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     public void loginSuccessful() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
          getActivity().startActivity(intent);
+        finish();
     }
 
     @Override
