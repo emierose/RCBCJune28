@@ -10,4 +10,5 @@ public class Title {
     public static String SUCCESSFUL_REGISTRATION="Successful Registration";
     public static String LOGIN="Login";
     public static String PERAPADALASEND="Pera Padala Send";
+    public static String PERAPADALAPAYOUT="Pera Padala Send";
 }

@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,21 +40,31 @@ View view,sender_data,bene_data,payment_data;
     AlertDialog mAlertDialog,searchResultDialog;
     AlertDialog.Builder    builder;
     EditText sender_search,bene_search;
-    private String payment_type_id, payment_type_value;
+    private String payment_type_id="", payment_type_value="";
     ViewStub stub ;
+    private TextView value,id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.remittance_perapadala_send, container, false);
         sender_data = view.findViewById(R.id.include_sender_data);
         bene_data = view.findViewById(R.id.include_bene_data);
-        stub = (ViewStub) view.findViewById(R.id.paymentdata_stub);
+//        stub = (ViewStub) view.findViewById(R.id.paymentdata_stub);
         TextView bene = (TextView)bene_data.findViewById(R.id.tv_title);
         bene.setText("Beneficiary");
+         id =(TextView) view.findViewById(R.id.tv_id);
+         value =(TextView) view.findViewById(R.id.tv_value);
         view.findViewById(R.id.tv_paymentOption).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PeraPadalaPaymentOptions.class);
                 startActivityForResult(intent, 1);
+            }
+        });
+        view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mControler.submit(payment_type_id,payment_type_value);
             }
         });
         mModel = new PeraPadalaModel();
@@ -91,13 +100,6 @@ View view,sender_data,bene_data,payment_data;
                 return false;
             }
         });
-        view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mControler.submit();
-            }
-        });
-
         return view;
     }
 
@@ -139,7 +141,14 @@ View view,sender_data,bene_data,payment_data;
     @Override
     public PeraPadalaHolder getCredentials(int type) {
         PeraPadalaHolder holder = new PeraPadalaHolder();
-        if (type == 2){
+//        if(type ==1){
+//            stub.setLayoutResource(R.layout.remittance_client_search_item);
+//            payment_data = stub.inflate();
+//            holder.payment_data = payment_data;
+//            holder.payment_id =(TextView) payment_data.findViewById(R.id.tv_name);
+//            holder.payment_value =(TextView) payment_data.findViewById(R.id.tv_bdate);
+//        }
+         if (type == 2){
             holder.firstname = (EditText) dialogView.findViewById(R.id.et_firstname);
         holder.middlename = (EditText) dialogView.findViewById(R.id.et_middlename);
         holder.lastname = (EditText) dialogView.findViewById(R.id.et_lastname);
@@ -153,6 +162,7 @@ View view,sender_data,bene_data,payment_data;
         holder.tl_bdate = (TextInputLayout) dialogView.findViewById(R.id.tl_bday);
         holder.tl_mobile = (TextInputLayout) dialogView.findViewById(R.id.tl_mobile);
         holder.tl_email = (TextInputLayout) dialogView.findViewById(R.id.tl_email);
+
       }else {
             holder.builder = mAlertDialog;
             holder.searchDialog = searchResultDialog;
@@ -160,6 +170,12 @@ View view,sender_data,bene_data,payment_data;
             holder.bene_data = view.findViewById(R.id.include_bene_data);
             holder.payment_option = (TextView)view.findViewById(R.id.tv_paymentOption);
             holder.bene_layout = (CardView)bene_data.findViewById(R.id.cv);
+            holder.sender_id = (TextView)holder.sender_data.findViewById(R.id.tv_loyaltyno);
+            holder.bene_id = (TextView)holder.bene_data.findViewById(R.id.tv_loyaltyno);
+             holder.tl_amount =(TextInputLayout)view.findViewById(R.id.tl_amount);
+             holder.amount = (EditText)view.findViewById(R.id.et_amount);
+             holder.payment_id =(TextView) view.findViewById(R.id.tv_id);
+             holder.payment_value =(TextView) view.findViewById(R.id.tv_value);
 
         }
         return holder;
@@ -207,11 +223,13 @@ View view,sender_data,bene_data,payment_data;
         recList.setAdapter(null);
         builder.setNegativeButton("DISMISS", null);
         searchResultDialog = builder.create();
-        PadalaSearchAdapter adaper = new PadalaSearchAdapter(getActivity(),searchData,searchResultDialog,getCredentials(1),type);
+        PadalaSearchAdapter adaper = new PadalaSearchAdapter(getActivity(),searchData,searchResultDialog,getCredentials(3),type);
         recList.setAdapter(adaper);
         searchResultDialog.show();
+    }
 
-
+    @Override
+    public void displaySearchResult(ClientObjects searchData) {
 
     }
 
@@ -254,15 +272,10 @@ View view,sender_data,bene_data,payment_data;
             if (resultCode != 0) {
                 payment_type_id = data.getStringExtra("id");
                 payment_type_value = data.getStringExtra("value");
-                stub.setLayoutResource(R.layout.remittance_client_search_item);
-                payment_data = stub.inflate();
-                stub.setVisibility(View.VISIBLE);
-                ImageView icon =(ImageView) payment_data.findViewById(R.id.icon);
-                icon.setImageResource(R.drawable.ic_payment_method);
-                TextView id =(TextView) payment_data.findViewById(R.id.tv_name);
-                TextView value =(TextView) payment_data.findViewById(R.id.tv_bdate);
-                id.setText(payment_type_id);
-                value.setText(payment_type_value);
+                view.findViewById(R.id.cv).setVisibility(View.VISIBLE);
+                id.setText("PAYMENT TYPE:"+payment_type_id);
+                value.setText("PAYMENT ID:" +payment_type_value);
+                System.out.println("ID:" + payment_type_id + " " + payment_type_value);
             }
         }
 

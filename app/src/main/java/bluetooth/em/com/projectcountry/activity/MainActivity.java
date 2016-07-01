@@ -23,6 +23,7 @@ import android.widget.TextView;
 import UnlitechDevFramework.src.ud.framework.data.Response;
 import bluetooth.em.com.projectcountry.R;
 import bluetooth.em.com.projectcountry.activity.more.Terms;
+import bluetooth.em.com.projectcountry.activity.remittance.PeraPadalaPayout;
 import bluetooth.em.com.projectcountry.activity.remittance.PeraPadalaSend;
 import bluetooth.em.com.projectcountry.controller.MainmenuController;
 import bluetooth.em.com.projectcountry.data.Message;
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.remove(getSupportFragmentManager().findFragmentById(R.id.content_frame)).commit();
 //                fab.setVisibility(View.VISIBLE);
-//                findViewById(R.id.main).setVisibility(View.VISIBLE);
+                findViewById(R.id.fab).setVisibility(View.VISIBLE);
+                findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle(Title.APPTITLE);
 
             } else {
@@ -156,6 +158,10 @@ public class MainActivity extends AppCompatActivity
         if (name.equals("Pera Padala (Remittance)")) {
             fragment = new PeraPadalaSend();
             tag = "Pera Padala Send";
+        }
+        if (name.equals("Receive Padala (Payout)")) {
+            fragment = new PeraPadalaPayout();
+            tag = "Pera Padala Payout";
         }
         if(name.equals("View Merchants Locations")){
             viewMerchantsLocations();

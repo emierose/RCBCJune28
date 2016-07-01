@@ -79,7 +79,7 @@ public class PadalaSearchAdapter extends RecyclerView.Adapter<PadalaSearchAdapte
         bday.setVisibility(View.VISIBLE);
         email.setVisibility(View.VISIBLE);
         mobile.setVisibility(View.VISIBLE);
-        loyalty.setText(Html.fromHtml("<b>LOYALTY #: </b>" + objects.get(position).CARDNO));
+        loyalty.setText(Html.fromHtml("<b>ID NUMBER: </b>" + objects.get(position).CARDNO));
         name.setText(Html.fromHtml("<b>NAME : </b>" + objects.get(position).FNAME +" " +objects.get(position).MNAME +" "+objects.get(position).LNAME) );
         bday.setText(Html.fromHtml("<b>BIRTHDAY: </b>" + objects.get(position).BDATE));
         email.setText(Html.fromHtml("<b>EMAIL: </b>" + objects.get(position).EMAIL));

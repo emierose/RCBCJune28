@@ -1,6 +1,7 @@
 package bluetooth.em.com.projectcountry.controller;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import UnlitechDevFramework.src.ud.framework.data.enums.Status;
 import UnlitechDevFramework.src.ud.framework.utilities.ViewUtil;
 import UnlitechDevFramework.src.ud.framework.webservice.data.WebServiceInfo;
 import bluetooth.em.com.projectcountry.R;
+import bluetooth.em.com.projectcountry.activity.MainActivity;
 import bluetooth.em.com.projectcountry.data.ClientObjects;
 import bluetooth.em.com.projectcountry.data.JSONFlag;
 import bluetooth.em.com.projectcountry.data.Message;
@@ -35,6 +37,8 @@ public class PeraPadalaSendController {
     ArrayList<ClientObjects> clientList;
  public static ArrayList<ClientObjects> paymentmodes;
     String SEARCHTYPE;
+    private String PAYMENT_TYPE, PAYMENT_ID;
+
     public PeraPadalaSendController(PeraPadalaInterface view, PeraPadalaModel model) {
         clientList = new ArrayList<>();
         paymentmodes = new ArrayList<>();
@@ -83,6 +87,15 @@ public class PeraPadalaSendController {
                                 }
                                 showSearchResult();
                             }
+                            break;
+                        case 3:
+                            mView.showError("", jo.getString(JSONFlag.MESSAGE), new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    Intent intent = new Intent(mView.getActivity(), MainActivity.class);
+                                    mView.getActivity().startActivity(intent);
+                                }
+                            });
                             break;
                     }
                 } else {
@@ -231,13 +244,57 @@ public class PeraPadalaSendController {
         }
     }
 
-    public void submit() {
+    public void submit(String type, String id) {
+        PAYMENT_TYPE = type;
+        PAYMENT_ID = id;
         if(validCredential()){
-            
+                System.out.println("WILL SEND");
+            sendPeraPadala();
         }
     }
 
+    private void sendPeraPadala() {
+        User user = new UserModel().getCurrentUser(mView.getContext());
+        try {
+            PeraPadalaInterface.PeraPadalaHolder holder = mView.getCredentials(3);
+            WebServiceInfo wsInfo = new WebServiceInfo("http://52.77.224.133:8089/ws_user/send_remittance_transaction");
+            wsInfo.addParam("client_id",user.getClientId());
+            wsInfo.addParam("session_id", user.getSessionId());
+            wsInfo.addParam("sender_id", holder.sender_id.getText().toString());
+            wsInfo.addParam("beneficiary_id", holder.bene_id.getText().toString());
+            wsInfo.addParam("amount", holder.amount.getText().toString());
+            wsInfo.addParam("payment_type", PAYMENT_TYPE);
+            wsInfo.addParam("payment_value", PAYMENT_ID);
+            mModel.sendRequestWithProgressbar(mView.getContext(), wsInfo, 3);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mView.showError("", Message.EXCEPTION, null);
+        }}
+
     private boolean validCredential() {
-        return false;
+        boolean result = true;
+        String message = "This field is required.";
+        PeraPadalaInterface.PeraPadalaHolder holder = mView.getCredentials(3);
+        System.out.println("PAYMENT TYPEl:"+  holder.payment_id.getText().toString());
+        System.out.println("ID:"+  holder.sender_id.getText().toString()+" BENE:"+holder.sender_id.getText().toString());
+        if(holder.sender_id.getText().toString().equals("")){
+            mView.showError(Title.PERAPADALASEND, "Please add sender", null);
+            result = false;
+        }else if(holder.bene_id.getText().toString().equals("")){
+            mView.showError(Title.PERAPADALASEND, "Please add beneficiary", null);
+            result = false;
+        }else if(holder.sender_id.getText().toString().equals(holder.bene_id.getText().toString())){
+            mView.showError(Title.PERAPADALASEND, "Sender and beneficiary must not be the same.",null);
+            result = false;
+        }
+        else if(holder.payment_id.getText().toString().equals("")){
+            mView.showError(Title.PERAPADALASEND, "Please choose payment option.", null);
+            result = false;
+        }
+        else if(ViewUtil.isEmpty(holder.amount)){
+            holder.tl_amount.setError(message);
+            result = false;
+        }
+        return  result;
     }
 }

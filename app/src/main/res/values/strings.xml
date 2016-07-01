@@ -62,4 +62,10 @@
     <string name="submit2">SUBMIT</string>
     <string name="merchantlocation">Merchant Location</string>
     <string name="paymentmodes">Payment Modes</string>
+
+    <string name="amount">Amount</string>
+    <string name="payout">Payout</string>
+    <string name="idtype">ID Type</string>
+    <string name="idno">ID Number</string>
 </resources>
+
