@@ -31,7 +31,6 @@
             android:drawableLeft="@mipmap/ic_marker"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="LONG"
             android:textColor="@color/common_signin_btn_text_light"
             android:textSize="15sp" />
 
@@ -43,7 +42,6 @@
             android:drawableLeft="@mipmap/ic_marker"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="LAT"
             android:textColor="@color/common_signin_btn_text_light"
             android:textSize="15sp" />
 

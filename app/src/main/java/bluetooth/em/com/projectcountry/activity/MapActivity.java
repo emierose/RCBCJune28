@@ -59,15 +59,7 @@ public class MapActivity extends AppCompatActivity implements LocationView, AppG
         btnUpdateLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mController.login();
-//                findViewById(R.id.view).setVisibility(View.GONE);
-//                tvlat.setVisibility(View.VISIBLE);
-//                tvlong.setVisibility(View.VISIBLE);
                 mController.updateLocation();
-
-//                tvadd.setText("You wont be able receive remittance transactions until you set your location. ");
-
-
             }
         });
         if(Constants.LOCATION_STATUS ==1) {
@@ -80,7 +72,6 @@ public class MapActivity extends AppCompatActivity implements LocationView, AppG
                     tvlat.setText("LATITUDE: " + Constants.LATITUDE);
                     tvadd.setText(add.get(0).getAddressLine(0) + "," + add.get(0).getLocality() + "," +
                             add.get(0).getCountryName());
-
                 }
 
             } catch (IOException e) {

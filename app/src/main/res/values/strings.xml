@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RCBC</string>
+    <string name="app_name">iTranzact</string>
     <string name="google_api_key">AIzaSyDXBoMwnqZCFfgExbuJcHXcen3Q3f5zZrI</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
